@@ -1,0 +1,8 @@
+{
+    "name": "tree-swapper",
+    "version": "1.0.0",
+    "title": "Tree Swapper",
+    "author": "Max <mxcop>",
+    "factorio_version": "1.1",
+    "dependencies": ["base"]
+}
