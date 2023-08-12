@@ -1,3 +1,7 @@
+local function starts_with(str, start)
+    return str:sub(1, #start) == start
+end
+
 local function ends_with(str, ending)
     return ending == "" or str:sub(-#ending) == ending
 end
@@ -13,24 +17,28 @@ local function replace_trees(event)
 
     local entities = surface.find_entities_filtered{area = event.area, type = 'tree'}
     for _, tree in pairs(entities) do
+        if starts_with(tree.name, "tree") == false then
+            goto continue
+        end
+
         local rand = global.rng(0, 2);
 
-        if rand == 0 then
-            if ends_with(tree.name, "red") then
-                surface.create_entity{name = 'tree-02-red', position = tree.position}
-            else
+        if ends_with(tree.name, "red") then
+            surface.create_entity{name = 'tree-02-red', position = tree.position}
+        else
+            if rand == 0 then
                 surface.create_entity{name = 'tree-02', position = tree.position}
+            end
+            if rand == 1 then
+                surface.create_entity{name = 'tree-05', position = tree.position}
+            end
+            if rand == 2 then
+                surface.create_entity{name = 'tree-07', position = tree.position}
             end
         end
 
-        if rand == 1 then
-            surface.create_entity{name = 'tree-05', position = tree.position}
-        end
-        if rand == 2 then
-            surface.create_entity{name = 'tree-07', position = tree.position}
-        end
-
         tree.destroy()
+        ::continue::
     end
 end
 
